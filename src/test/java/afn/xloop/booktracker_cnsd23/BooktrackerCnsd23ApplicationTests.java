@@ -72,4 +72,34 @@ class BooktrackerCnsd23ApplicationTests {
 
 	}
 
+
+	@Test
+	public void canDeleteBook() throws Exception {
+		Book book1 = new Book(1, "HTML for Babies", "Some Kid", 1999, 26);
+		Book book2 = new Book(2, "C# Expert", "Rox", 2006, 260);
+		Collection<Book> books = new ArrayList<Book>();
+		books.add(book1);
+		books.add(book2);
+		when(bookrepository.deleteBook(1)).thenReturn(book1);
+		mvc.perform(delete("/books/delete/1")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	public void canUpdateBook() throws Exception {
+		Book book1 = new Book(1, "HTML for Babies", "Some Kid", 1999, 26);
+		Book book2 = new Book(2, "C# Expert", "Rox", 2006, 260);
+		Collection<Book> books = new ArrayList<Book>();
+		books.add(book1);
+		books.add(book2);
+
+		Book updateBook = new Book(1, "HTML for", "Some Kid", 1999, 26);
+		when(bookrepository.updateBook(1, updateBook)).thenReturn(updateBook);
+		mvc.perform(put("/books/update/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(updateBook)))
+				.andExpect(status().isOk());
+	}
+
 }
