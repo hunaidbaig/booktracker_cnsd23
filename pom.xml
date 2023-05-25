@@ -55,6 +55,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>test-service</finalName>
 	</build>
 
 </project>
